@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Source editor</title>
+
+    <link rel="stylesheet" type="text/css" href="../node_modules/semantic-ui-css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/semantic-ui-css/semantic.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+
+	</head>
+	<body class="basic minimal">
+    <div id="main-content">
+    </div>
+  </body>
+  <script>
+    // in development.
+    // if (process.env.NODE_ENV !== 'production') {
+    //   require('electron-react-devtools').inject()
+    // }
+  </script>
+  <script src="http://localhost:8080/webpack-dev-server.js"></script>
+  <script src="http://localhost:8080/bundle.js"></script>
+</html>

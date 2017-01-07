@@ -1,0 +1,93 @@
+@import './variables.less';
+
+@ft-bg: lighten(@app-background-color, 5%);
+
+@ft-projpath-color: @text-color;
+@ft-projpath-line-color: lighten(@ft-bg, 10%);
+
+#editor-ft {
+  background-color: @ft-bg;
+}
+
+.editor-ft-projpath {
+  padding: @component-padding-small;
+  font-size: @font-size;
+  color: @ft-projpath-color;
+  border-bottom: 1px solid @ft-projpath-line-color;
+}
+
+.editor-ft-projtree {
+  margin-left: 5px !important;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* states */
+.editor-ft-projtree {
+  cursor: default;
+  position: relative !important;
+
+  /* list */
+  .content {
+    padding-left: 0px !important;
+  }
+
+  .list {
+    padding-left: @list-padding-left !important;
+    padding-right: @list-padding-right !important;
+    padding-top: @list-padding-top !important;
+    padding-bottom: @list-padding-bottom !important;
+  }
+
+  .list > .item :has(> i .folder) {
+    margin-left: -16px !important;
+  }
+
+  .item :has(> i .file) {
+    margin-left: 0px !important;
+  }
+
+  .icon {
+    color: @text-color !important;
+  }
+
+  .header {
+    color: @text-color !important;
+
+    &:after {
+      content: "" !important;
+      position: absolute !important;
+      width: 100% !important;
+      height: 18px;
+      z-index: 1;
+      left: 0;
+      right: 0;
+    }
+    &:hover {
+      &:after {
+        background-color: @background-color-highlight !important;
+        transition: background-color @anim-hightlight-time;
+      }
+
+      color: @text-color-highlight !important;
+      transition: color @anim-hightlight-time;
+    }
+  }
+}
+// .editor-ft-projtree .item .header:hover {
+//   color: @text-color-highlight !important;
+//   cursor: default;
+// }
+
+/* Scrollbars */
+.editor-ft-projtree::-webkit-scrollbar {
+  width: @scroll-width;
+}
+
+.editor-ft-projtree::-webkit-scrollbar-track {
+  background-color: darken(@ft-bg, 7%);
+}
+
+.editor-ft-projtree::-webkit-scrollbar-thumb {
+  background-color: lighten(@ft-bg, 30%);
+}
