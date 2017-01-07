@@ -10,9 +10,18 @@ class FileTreeItem extends React.Component {
 
     this.state = {
       item: props.item,
-      subitems: props.subitems,
-      is_collapsed: true
+      collapsed: true
     };
+
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(e) {
+    if (this.state.item.is_dir) {
+      this.setState(prevState => ({
+        collapsed: !prevState.collapsed
+      }));
+    }
   }
 
   componentDidMount() {
@@ -25,15 +34,29 @@ class FileTreeItem extends React.Component {
   // render method returns JSX template
   render() {
     const has_subfiles = this.state.item.files && this.state.item.files.length > 0;
+    const is_collapsed = this.state.collapsed;
+
+    var subitems = null;
+    if (has_subfiles && !is_collapsed) {
+      subitems = this.state.item.files.map((sub_item, index) => {
+        return (
+          <FileTreeItem
+            item={sub_item}
+            key={sub_item.fullpath}
+            />
+          );
+      });
+    }
+
     return (
       <div className="item noselect">
-        {has_subfiles && <i className="dropdown icon"></i>}
+        {has_subfiles && <i className={is_collapsed ? "plus square outline icon" : "minus square outline icon"}></i>}
         <i className={this.state.item.is_dir ? "folder icon" : "file icon"}></i>
         <div className="content">
-          <div className="header">{this.state.item.name}</div>
+          <div className="header" onClick={this.onClick}>{this.state.item.name}</div>
         {
-          (has_subfiles) &&
-          <div key={this.state.item.fullpath} className="list">{this.state.subitems}</div>
+          (subitems) &&
+          <div key={this.state.item.fullpath} className="list">{subitems}</div>
         }
         </div>
       </div>

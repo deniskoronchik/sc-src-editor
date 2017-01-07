@@ -25,31 +25,14 @@ class FileTree extends React.Component {
   componentWillUnmount() {
   }
 
-  // render method is most important
-  // render method returns JSX template
   render() {
     function renderItemRecursively(item) {
       if (!item)
         return null;
 
-      if (item.is_dir) {
-        const subitems = item.files.map((sub_item, index) => {
-          return renderItemRecursively(sub_item);
-        });
-
-        return (
-          <FileTreeItem
-            item={item}
-            subitems={subitems}
-            key={item.fullpath}
-            />
-          );
-      }
-
       return (
         <FileTreeItem
           item={item}
-          subitems={null}
           key={item.fullpath}
           />
         );
@@ -59,7 +42,7 @@ class FileTree extends React.Component {
     return (
             <div id="editor-ft" className="left-pane">
               <div className="editor-ft-projpath">{this.props.project_path}</div>
-              <ul className="editor-ft-projtree ui list">{items}</ul>
+              <div className="editor-ft-projtree ui list">{items}</div>
             </div>
         );
   }
