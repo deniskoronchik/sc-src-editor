@@ -1,9 +1,9 @@
 @import './variables.less';
 
-@ft-bg: lighten(@app-background-color, 5%);
+@ft-bg: @tree-view-background-color;
 
 @ft-projpath-color: @text-color;
-@ft-projpath-line-color: lighten(@ft-bg, 10%);
+@ft-projpath-line-color: @tree-view-border-color;
 
 #editor-ft {
   background-color: @ft-bg;
@@ -85,9 +85,9 @@
 }
 
 .editor-ft-projtree::-webkit-scrollbar-track {
-  background-color: darken(@ft-bg, 7%);
+  background-color: @scrollbar-background-color;
 }
 
 .editor-ft-projtree::-webkit-scrollbar-thumb {
-  background-color: lighten(@ft-bg, 30%);
+  background-color: @scrollbar-color;
 }
