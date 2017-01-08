@@ -7,11 +7,6 @@ import TabEditorItemContent from './tab_editor/te_item_content.component';
 // FileTree component created as a class
 class TabEditor extends React.Component {
 
-  propTypes: {
-    active: React.PropTypes.string.isRequired;
-    tabs: React.PropTypes.array.isRequired
-  };
-
   constructor(props) {
     super(props);
 
@@ -20,23 +15,16 @@ class TabEditor extends React.Component {
     }
   }
 
-  onTabClick(key, e) {
-    e.preventDefault();
+  onTabClick(file_path) {
     this.setState(prevState => ({
-      active: key
+      active: file_path
     }));
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.active != this.state.active) {
-      return true;
+  onTabClose(file_path) {
+    if (this.props.onRequestCloseTab) {
+      this.props.onRequestCloseTab(file_path);
     }
-
-    if (nextProps.tabs.length != this.props.tabs.length) {
-      return true;
-    }
-
-    return false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,10 +43,11 @@ class TabEditor extends React.Component {
 
       return (
         <TabEditorItemTab
-          key={key}
-          file_info={file_info}
-          active={is_active}
-          onClick={this.onTabClick.bind(this, file_info.fullpath)}
+          key             = {key}
+          file_info       = {file_info}
+          active          = {is_active}
+          onRequestActive = {this.onTabClick.bind(this, file_info.fullpath)}
+          onRequestClose  = {this.onTabClose.bind(this, file_info.fullpath)}
         />);
     });
   }
@@ -92,6 +81,20 @@ class TabEditor extends React.Component {
         );
   }
 }
+
+TabEditor.propTypes = {
+  active: React.PropTypes.string.isRequired,
+  tabs: React.PropTypes.array.isRequired,
+
+  onRequestCloseTab: React.PropTypes.func
+};
+
+TabEditor.defaultProps = {
+  active: "",
+  tabs: [],
+
+  onRequestCloseTab: null
+};
 
 // Export for re-use
 export default TabEditor

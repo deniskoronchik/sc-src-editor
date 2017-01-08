@@ -17,7 +17,7 @@ class AppContainer extends React.Component {
      this.state = {
        files: null,
        openedFiles: [],
-       activeFile: null
+       activeFile: ""
      };
    }
 
@@ -119,7 +119,7 @@ class AppContainer extends React.Component {
     this.dragImpl('editor-ft', 'editor-tabs', 'panes-separator', 10, 90);
 
     this.setState(prevState => ({
-      files: FileProvider.list("D:/github/SmartHome/kb")
+      files: FileProvider.list("D:/github/SmartHome/kb/TestHouse")
     }));
   }
 
@@ -137,6 +137,41 @@ class AppContainer extends React.Component {
     }
   }
 
+  onRequestCloseFile(file_path) {
+    // try to find it in opened files and close
+    var found_idx = -1;
+    const el = this.state.openedFiles.find((item, index) => {
+      const res = (item.fullpath === file_path);
+      if (res) {
+        found_idx = index;
+      }
+      return res;
+    });
+
+    if (el && found_idx != -1) {
+      this.setState(function(prevState, props) {
+        prevState.openedFiles.splice(found_idx, 1);
+        var new_state = {
+          openedFiles: prevState.openedFiles
+        }
+
+        // change active tab
+        if (file_path == this.state.activeFile) {
+          var active_file = "";
+          if (prevState.openedFiles.length > 0) {
+              const active_idx = Math.min(found_idx, prevState.openedFiles.length - 1);
+              active_file = prevState.openedFiles[active_idx].fullpath;
+          }
+          new_state['activeFile'] = active_file;
+        }
+
+        return new_state;
+      }); // setState
+    } else {
+      throw "Unknown error: try to close file {0} but it doesn't opened".format(file_path);
+    }
+  }
+
   render () {
     return (
       <div className="panes-container">
@@ -147,8 +182,9 @@ class AppContainer extends React.Component {
         <div className="panes-separator" id="panes-separator"></div>
         <div id="editor-tabs" className="right-pane">
           <TabEditor
-            tabs = {this.state.openedFiles}
-            active = {this.state.activeFile}
+            tabs              = {this.state.openedFiles}
+            active            = {this.state.activeFile}
+            onRequestCloseTab = {this.onRequestCloseFile.bind(this)}
             />
         </div>
       </div>
