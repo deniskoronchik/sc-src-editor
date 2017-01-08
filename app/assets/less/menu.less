@@ -1,0 +1,56 @@
+@import './variables.less';
+
+.context-menu {
+  position: fixed !important;
+  z-index: 1000;
+
+  background-color: @menu-background-color;
+  border-radius: @component-border-radius;
+  border: 1px solid lighten(@button-background-color, 5%);
+
+  .item {
+     margin: @menu-item-paddings !important;
+     font-weight: normal !important;
+     font-size: @font-size !important;
+     font-family: @font-family !important;
+
+     &::after {
+       content: "" !important;
+       position: absolute !important;
+       width: 100% !important;
+       left: 0;
+       right: 0;
+       height: 22px !important;
+       margin-top: -17px;
+       z-index: -1;
+       visibility: visible !important;
+     }
+
+     &:hover {
+
+       &::after {
+         background-color: @menu-background-color-active !important;
+       }
+
+       &, .icon {
+         color: #fff !important;
+         transition: color 0.3s;
+       }
+     }
+  }
+  .icon {
+    margin-right: @component-padding-small !important;
+  }
+
+  .item, .icon {
+    color: @menu-text-color !important;
+  }
+
+  // separator
+  hr {
+    border: 0;
+    height: 1px;
+    width: 90%;
+    background-color: darken(@menu-background-color, 10%);
+  }
+}

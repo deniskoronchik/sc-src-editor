@@ -1,8 +1,7 @@
 // ES6 Component
 // Import React
 import React  from 'react';
-
-const Input = require('../../js/input');
+import Input from '../../js/input';
 
 class TabEditorItemTab extends React.Component {
 
@@ -26,11 +25,11 @@ class TabEditorItemTab extends React.Component {
     e.stopPropagation();
 
     switch (e.button) {
-      case Input.Mouse.LeftButton:
+      case Input.MouseLeftButton:
         this._handleRequestActive();
       break;
 
-      case Input.Mouse.MiddleButton:
+      case Input.MouseMiddleButton:
         this._handleRequestClose();
       break;
     }
@@ -41,8 +40,8 @@ class TabEditorItemTab extends React.Component {
     e.stopPropagation();
 
     switch (e.button) {
-      case Input.Mouse.LeftButton:
-      case Input.Mouse.MiddleButton:
+      case Input.MouseLeftButton:
+      case Input.MouseMiddleButton:
         this._handleRequestClose();
       break;
     }
