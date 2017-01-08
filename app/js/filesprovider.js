@@ -82,7 +82,7 @@ function FSFileProvider(list_path, allowedExtensions) {
   };
 }
 
-/* Each function return hierarchy of file objects.
+/* Each function return hierarchy of a file objects.
  * {
      is_dir: true,
      name: "kb",
@@ -103,10 +103,8 @@ function FSFileProvider(list_path, allowedExtensions) {
    }
  */
 
-module.exports = {
-    list: function(path, allowedExtensions) {
-      /// TODO: add ssupport of other protocols
-      var fp = new FSFileProvider(path);
-      return fp.list();
-    }
+export function listFiles(path, allowedExtensions) {
+  /// TODO: add ssupport of other protocols
+  var fp = new FSFileProvider(path);
+  return fp.list();
 }

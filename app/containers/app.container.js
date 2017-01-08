@@ -6,8 +6,7 @@ import '../assets/less/all.less';
 //Custom components
 import FileTree from '../components/filetree.component';
 import TabEditor from '../components/tab_editor.component';
-
-const FileProvider = require('../js/filesprovider.js');
+import {listFiles} from '../js/filesprovider.js';
 
 class AppContainer extends React.Component {
 
