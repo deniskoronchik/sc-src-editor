@@ -17,6 +17,7 @@ class FileTreeItem extends React.Component {
   }
 
   onClick(e) {
+    e.preventDefault();
     if (this.state.item.is_dir) {
       this.setState(prevState => ({
         collapsed: !prevState.collapsed

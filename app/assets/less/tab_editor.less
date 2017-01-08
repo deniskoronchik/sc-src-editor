@@ -1,0 +1,62 @@
+@import './variables.less';
+
+#tab-editor {
+  background-color: @tab-bar-background-color;
+  width: 100% !important;
+  height: 100% !important;
+
+  .tab {
+    &.segment {
+      background-color: @tab-background-color !important;
+      height: 100%;
+
+      border-color: @tab-background-color !important;
+    }
+  }
+
+  .tabular.menu {
+    border-color: @tab-border-color !important;
+    cursor: default !important;
+
+    .item {
+      border-color: none !important;
+      background-color: none !important;
+      position: relative !important;
+      color: @text-color !important;
+      font-family: @font-family !important;
+      font-size: @font-size !important;
+      font-weight: normal !important;
+
+      &:hover {
+        background-color: lighten(@tab-background-color, 5%) !important;
+        color: lighten(@text-color, 25%) !important;
+      }
+
+      &.active {
+        border-color: @tab-border-color !important;
+        background-color: @tab-background-color-active !important;
+        color: @text-color-highlight !important;
+
+        &:hover {
+          background-color: lighten(@tab-background-color-active, 5%) !important;
+          color: lighten(@text-color-highlight, 5%) !important;
+        }
+
+        &:after {
+          content: "" !important;
+          position: absolute !important;
+          pointer-events: none;
+          z-index: 4 !important;
+          background: @tab-border-color-left-active !important;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 3px;
+          border-top-left-radius: @component-border-radius !important;
+          border-radius: @component-border-radius !important;
+        }
+      }
+
+    }
+  }
+}

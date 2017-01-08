@@ -3,8 +3,6 @@
 import React  from 'react';
 import FileTreeItem from './filetree/ft_item.component';
 
-const FileProvider = require('../js/filesprovider.js');
-
 // FileTree component created as a class
 class FileTree extends React.Component {
 
@@ -12,14 +10,11 @@ class FileTree extends React.Component {
     super(props);
 
     this.state = {
-      files: null
+      files: props.files
     }
   }
 
   componentDidMount() {
-    this.setState({
-      files: FileProvider.list(this.props.project_path)
-    });
   }
 
   componentWillUnmount() {

@@ -17,13 +17,6 @@ html, body {
     width: 18%;
 }
 
-.panes-separator {
-    width: 5px;
-    position: relative;
-    cursor: col-resize;
-    background-color: #eee;
-}
-
 .right-pane {
     flex: auto;
 }

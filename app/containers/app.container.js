@@ -5,6 +5,9 @@ import '../assets/less/all.less';
 
 //Custom components
 import FileTree from '../components/filetree.component';
+import TabEditor from '../components/tab_editor.component';
+
+const FileProvider = require('../js/filesprovider.js');
 
 class AppContainer extends React.Component {
 
@@ -114,13 +117,34 @@ class AppContainer extends React.Component {
   }
 
   render () {
+    /// test
+    function findFiles(item, res) {
+      if (item.files) {
+        item.files.map((sub_item, index) => {
+          findFiles(sub_item, res);
+        });
+      } else {
+        res.push(item);
+      }
+
+      return res;
+    }
+
+    const files = FileProvider.list("D:/github/SmartHome/kb/Common/dialogue");
+    const testFiles = findFiles(files, []);
+
     return (
       <div className="panes-container">
         <FileTree
-          project_path="D:/github/SmartHome/kb/Common/dialogue"
+          files={files}
           />
         <div className="panes-separator" id="panes-separator"></div>
-        <div id="editor-tabs" className="right-pane"></div>
+        <div id="editor-tabs" className="right-pane">
+          <TabEditor
+            tabs={testFiles}
+            active={testFiles[4].fullpath}
+            />
+        </div>
       </div>
     );
   }
