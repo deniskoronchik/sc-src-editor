@@ -15,6 +15,9 @@ class AppContainer extends React.Component {
      super(props);
 
      this.state = {
+       files: null,
+       openedFiles: [],
+       activeFile: null
      };
    }
 
@@ -114,35 +117,38 @@ class AppContainer extends React.Component {
 
   componentDidMount () {
     this.dragImpl('editor-ft', 'editor-tabs', 'panes-separator', 10, 90);
+
+    this.setState(prevState => ({
+      files: FileProvider.list("D:/github/SmartHome/kb")
+    }));
+  }
+
+  onRequestOpenFile(file_item) {
+    // append file tab
+    if (this.state.openedFiles.indexOf(file_item) === -1) {
+      this.setState(prevState => ({
+        openedFiles: prevState.openedFiles.concat([file_item]),
+        activeFile: file_item.fullpath
+      }));
+    } else {
+      this.setState(prevState => ({
+        activeFile: file_item.fullpath
+      }));
+    }
   }
 
   render () {
-    /// test
-    function findFiles(item, res) {
-      if (item.files) {
-        item.files.map((sub_item, index) => {
-          findFiles(sub_item, res);
-        });
-      } else {
-        res.push(item);
-      }
-
-      return res;
-    }
-
-    const files = FileProvider.list("D:/github/SmartHome/kb/Common/dialogue");
-    const testFiles = findFiles(files, []);
-
     return (
       <div className="panes-container">
         <FileTree
-          files={files}
+          files = {this.state.files}
+          onRequestOpenFile = {this.onRequestOpenFile.bind(this)}
           />
         <div className="panes-separator" id="panes-separator"></div>
         <div id="editor-tabs" className="right-pane">
           <TabEditor
-            tabs={testFiles}
-            active={testFiles[4].fullpath}
+            tabs = {this.state.openedFiles}
+            active = {this.state.activeFile}
             />
         </div>
       </div>

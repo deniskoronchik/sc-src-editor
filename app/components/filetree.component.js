@@ -8,10 +8,6 @@ class FileTree extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      files: props.files
-    }
   }
 
   componentDidMount() {
@@ -20,7 +16,14 @@ class FileTree extends React.Component {
   componentWillUnmount() {
   }
 
+  _handleRequestOpenFile(file_path) {
+    if (this.props.onRequestOpenFile) {
+      this.props.onRequestOpenFile(file_path);
+    }
+  }
+
   render() {
+    var self = this;
     function renderItemRecursively(item) {
       if (!item)
         return null;
@@ -29,11 +32,12 @@ class FileTree extends React.Component {
         <FileTreeItem
           item={item}
           key={item.fullpath}
+          onDoubleClickFile={self._handleRequestOpenFile.bind(self)}
           />
         );
     }
 
-    const items = renderItemRecursively(this.state.files);
+    const items = renderItemRecursively(this.props.files);
     return (
             <div id="editor-ft" className="left-pane">
               <div className="editor-ft-projpath">{this.props.project_path}</div>
@@ -41,6 +45,14 @@ class FileTree extends React.Component {
             </div>
         );
   }
+}
+
+FileTree.propTypes = {
+  onRequestOpenFile: React.PropTypes.func
+};
+
+FileTree.defaultProps = {
+  onRequestOpenFile: null
 }
 
 // Export for re-use

@@ -16,7 +16,6 @@ class TabEditor extends React.Component {
     super(props);
 
     this.state = {
-      tabs: props.tabs,
       active: props.active
     }
   }
@@ -28,21 +27,29 @@ class TabEditor extends React.Component {
     }));
   }
 
-  onAddTab(file_item) {
-
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     if (nextState.active != this.state.active) {
+      return true;
+    }
+
+    if (nextProps.tabs.length != this.props.tabs.length) {
       return true;
     }
 
     return false;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.active !== nextProps.active) {
+      this.setState(prevState => ({
+        active: nextProps.active
+      }));
+    }
+  }
+
   _renderTabs() {
 
-    return this.state.tabs.map((file_info, index) => {
+    return this.props.tabs.map((file_info, index) => {
       const is_active = (file_info.fullpath === this.state.active);
       const key = file_info.fullpath + "_tab";
 
@@ -57,7 +64,7 @@ class TabEditor extends React.Component {
   }
 
   _renderContents() {
-    return this.state.tabs.map((file_info, index) => {
+    return this.props.tabs.map((file_info, index) => {
       const is_active = (file_info.fullpath === this.state.active);
       return (
         <TabEditorItemContent

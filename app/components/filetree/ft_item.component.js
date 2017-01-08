@@ -12,16 +12,18 @@ class FileTreeItem extends React.Component {
       item: props.item,
       collapsed: true
     };
-
-    this.onClick = this.onClick.bind(this);
   }
 
-  onClick(e) {
+  onDoubleClick(e) {
     e.preventDefault();
     if (this.state.item.is_dir) {
       this.setState(prevState => ({
         collapsed: !prevState.collapsed
       }));
+    } else {
+      if (this.props.onDoubleClickFile) {
+        this.props.onDoubleClickFile(this.props.item);
+      }
     }
   }
 
@@ -44,6 +46,7 @@ class FileTreeItem extends React.Component {
           <FileTreeItem
             item={sub_item}
             key={sub_item.fullpath}
+            onDoubleClickFile={this.props.onDoubleClickFile}
             />
           );
       });
@@ -54,7 +57,7 @@ class FileTreeItem extends React.Component {
         {has_subfiles && <i className={is_collapsed ? "plus square outline icon" : "minus square outline icon"}></i>}
         <i className={this.state.item.is_dir ? "folder icon" : "file icon"}></i>
         <div className="content">
-          <div className="header" onClick={this.onClick}>{this.state.item.name}</div>
+          <div className="header" onDoubleClick = {this.onDoubleClick.bind(this)}>{this.state.item.name}</div>
         {
           (subitems) &&
           <div key={this.state.item.fullpath} className="list">{subitems}</div>
@@ -63,6 +66,14 @@ class FileTreeItem extends React.Component {
       </div>
       );
   }
+}
+
+FileTreeItem.propTypes = {
+  onDoubleClickFile: React.PropTypes.func
+};
+
+FileTreeItem.defaultProps = {
+  onDoubleClickFile: null
 }
 
 // Export for re-use
