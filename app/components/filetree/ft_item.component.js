@@ -54,7 +54,7 @@ class FileTreeItem extends React.Component {
 
     return (
       <div className="item noselect">
-        {has_subfiles && <i className={is_collapsed ? "plus square outline icon" : "minus square outline icon"}></i>}
+        {has_subfiles && <i className={is_collapsed ? "caret right icon" : "caret down icon"}></i>}
         <i className={this.state.item.is_dir ? "folder icon" : "file icon"}></i>
         <div className="content">
           <div className="header" onDoubleClick = {this.onDoubleClick.bind(this)}>{this.state.item.name}</div>

@@ -52,7 +52,7 @@ class SCsEditor extends React.Component {
 
   render() {
     return (
-      <div id={this.getContainerID()}></div>
+      <div id={this.getContainerID()} className="editor-text"></div>
     );
   }
 }
