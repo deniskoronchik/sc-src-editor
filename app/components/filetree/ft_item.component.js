@@ -14,6 +14,12 @@ class FileTreeItem extends React.Component {
     };
   }
 
+  onContextMenu(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this._handleRequestContextMenu([e.pageX, e.pageY]);
+  }
+
   onDoubleClick(e) {
     e.preventDefault();
     if (this.state.item.is_dir) {
@@ -24,6 +30,12 @@ class FileTreeItem extends React.Component {
       if (this.props.onDoubleClickFile) {
         this.props.onDoubleClickFile(this.props.item);
       }
+    }
+  }
+
+  _handleRequestContextMenu(pos) {
+    if (this.props.onRequestContextMenu) {
+      this.props.onRequestContextMenu(this.props.item, pos);
     }
   }
 
@@ -44,9 +56,10 @@ class FileTreeItem extends React.Component {
       subitems = this.state.item.files.map((sub_item, index) => {
         return (
           <FileTreeItem
-            item={sub_item}
-            key={sub_item.fullpath}
-            onDoubleClickFile={this.props.onDoubleClickFile}
+            item                  = {sub_item}
+            key                   = {sub_item.fullpath}
+            onDoubleClickFile     = {this.props.onDoubleClickFile}
+            onRequestContextMenu  = {this.props.onRequestContextMenu}
             />
           );
       });
@@ -57,7 +70,11 @@ class FileTreeItem extends React.Component {
         {has_subfiles && <i className={is_collapsed ? "caret right icon" : "caret down icon"}></i>}
         <i className={this.state.item.is_dir ? "folder icon" : "file icon"}></i>
         <div className="content">
-          <div className="header" onDoubleClick = {this.onDoubleClick.bind(this)}>{this.state.item.name}</div>
+          <div className="header"
+               onDoubleClick = {this.onDoubleClick.bind(this)}
+               onContextMenu  = {this.onContextMenu.bind(this)}>
+            {this.state.item.name}
+          </div>
         {
           (subitems) &&
           <div key={this.state.item.fullpath} className="list">{subitems}</div>
@@ -69,11 +86,17 @@ class FileTreeItem extends React.Component {
 }
 
 FileTreeItem.propTypes = {
-  onDoubleClickFile: React.PropTypes.func
+  onDoubleClickFile: React.PropTypes.func,
+  /* Receive parameters:
+   * - item - file item to show menu
+   * - pos - position to show menu ([x, y])
+   */
+  onRequestContextMenu: React.PropTypes.func
 };
 
 FileTreeItem.defaultProps = {
-  onDoubleClickFile: null
+  onDoubleClickFile: null,
+  onRequestContextMenu: null
 }
 
 // Export for re-use
