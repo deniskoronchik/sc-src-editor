@@ -9,11 +9,6 @@ import ScsEditor from './editors/scs_editor.component';
  */
 class FileEditor extends React.Component {
 
-  propTypes: {
-    fullpath: React.PropTypes.string.isRequired;
-    active: React.PropTypes.boolean.isRequired
-  }
-
   constructor(props) {
     super(props);
   }
@@ -32,13 +27,23 @@ class FileEditor extends React.Component {
     return (
       <div className="editor-wrap">
         <ScsEditor
-          fullpath={this.props.fullpath}
-          active={this.props.active}
+          fullpath  = {this.props.fullpath}
+          active    = {this.props.active}
           />
       </div>
     );
   }
 }
+
+FileEditor.propTypes = {
+  fullpath: React.PropTypes.string.isRequired,
+  active: React.PropTypes.bool.isRequired
+};
+
+FileEditor.defaultProps = {
+  fullpath: "new_",
+  active: false
+};
 
 // Export for re-use
 export default FileEditor
